@@ -2,19 +2,24 @@ const express = require("express");
 const app = express();
 const PORT = 5000;
 
-const http = require("http").Server(app);
 const cors = require("cors");
-
 app.use(cors());
+const http = require("http").Server(app);
 
 const socketIO = require("socket.io")(http, {
   cors: {
-    origin: "http://localhost:3000",
+    origin:
+      "https://3000-sammyjay-ideasapplatest-ua9wvdo4v0r.ws-eu62.gitpod.io/",
   },
 });
 
 socketIO.on("connection", (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
+
+  socket.on("message", (data) => {
+    console.log(data);
+  });
+
   socket.on("disconnect", () => {
     console.log("🔥: A user disconnected");
   });
